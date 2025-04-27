@@ -35,7 +35,7 @@ The CLI version of the base image is built from `serversideup/php:8.4-cli`. In [
 
 ## Build process
 
-`Dockerfile-cli.original` and `Dockerfile-web.original` are converted into `Dockerfile.cli` and `Dockerfile.web` respectively. This is not just because these are two different images, but also because the Dockerfile contains labels which are updated dynamically before each run. You can see the text `%BASE_IMAGE_BUILD_NO%` in the original files, which is replaced with the actual build number in the resulting Dockerfile.
+`Dockerfile-cli.original` and `Dockerfile-web.original` are converted into `Dockerfile.cli` and `Dockerfile.web` respectively. This is not just because these are two different images, but also because the Dockerfile contains labels which are updated dynamically before each run. You can see the text `%BASE_IMAGE_BUILD_NO%` in the original files, which is replaced with the actual build number in the resulting Dockerfile. You can see how this is done in [generate-docker-files.php](https://github.com/firefly-iii/base-image/blob/main/generate-docker-files.php).
 
 Adding the build number to the build this way helps me debug issues. When Firefly III (or the data importer) starts, it reports both the build number of the base image as the build number of the container itself.
 
