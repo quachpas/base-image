@@ -1,7 +1,9 @@
-name: ci
+name: "Build base image"
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "17 4 2,17 * *"
 
 env:
   REGISTRY_IMAGE: fireflyiii/base
