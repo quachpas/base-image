@@ -1,0 +1,21 @@
+FROM serversideup/php:8.4-cli
+
+# set some variables.
+ENV FIREFLY_III_PATH=/var/www/html COMPOSER_ALLOW_SUPERUSER=1 DEBIAN_FRONTEND=noninteractive PHP_MAX_EXECUTION_TIME=300 PHP_ERROR_REPORTING=24575 SHOW_WELCOME_MESSAGE=false BASE_IMAGE_BUILD=%BASE_IMAGE_BUILD_NO% BASE_IMAGE_DATE="%BASE_IMAGE_BUILD_DATE%" PHP_OPCACHE_ENABLE=1
+LABEL build_version="5.1" maintainer="james@firefly-iii.org"
+
+COPY conf/locale.gen                     /etc/locale.gen
+COPY scripts/wait-for-it.sh              /usr/local/bin/wait-for-it.sh
+COPY scripts/finalize-image.sh           /usr/local/bin/finalize-image.sh
+COPY scripts/execute-things-cli.sh           /etc/entrypoint.d/11-execute-things.sh
+
+USER root
+RUN set -eux; \
+    chmod uga+x /usr/local/bin/wait-for-it.sh && \
+    chmod uga+x /usr/local/bin/finalize-image.sh && \
+    apt update && apt install -y curl locales
+RUN set -eux; \
+    install-php-extensions intl bcmath memcached sockets && \
+    rm -rf /var/lib/apt/lists/*
+
+USER www-data
