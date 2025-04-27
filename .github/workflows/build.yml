@@ -16,11 +16,16 @@ jobs:
         platform:
           - linux/amd64
           - linux/arm64
+        environment:
+          - web
+          - cli
     steps:
       - name: Prepare
         run: |
           platform=${{ matrix.platform }}
+          environment=${{ matrix.environment }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
+          echo "ENV_PLATFORM_PAIR=${environment}-${platform//\//-}" >> $GITHUB_ENV
 
       - name: Docker meta
         id: meta
@@ -47,7 +52,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ env.REGISTRY_IMAGE }}
-          file: ./Dockerfile.web
+          file: ./Dockerfile.${{ matrix.environment }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
@@ -59,7 +64,7 @@ jobs:
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
-          name: digests-${{ env.PLATFORM_PAIR }}
+          name: digests-${{ env.ENV_PLATFORM_PAIR }}
           path: ${{ runner.temp }}/digests/*
           if-no-files-found: error
           retention-days: 1
