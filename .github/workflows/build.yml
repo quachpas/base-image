@@ -34,8 +34,6 @@ jobs:
       - name: Compile Dockerfiles and update repository
         run: |
           echo "Update counters"
-          ls -lah
-          exit 1
           BUILDNR=$(<"counter.txt")
           BUILDNR=$((BUILDNR + 1))
           git pull origin main
