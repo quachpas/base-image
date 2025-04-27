@@ -1,25 +1,40 @@
+#
+# The base image contains nginx and PHP
+#
 FROM serversideup/php:8.4-fpm-nginx
 
-# set some variables.
-ENV FIREFLY_III_PATH=/var/www/html COMPOSER_ALLOW_SUPERUSER=1 DEBIAN_FRONTEND=noninteractive PHP_MAX_EXECUTION_TIME=300 PHP_ERROR_REPORTING=24575 SHOW_WELCOME_MESSAGE=false BASE_IMAGE_BUILD=300 BASE_IMAGE_DATE="27-04-2025 13:11:39 UTC" PHP_OPCACHE_ENABLE=1
+#
+# Various variables and container settings
+#
+ENV FIREFLY_III_PATH=/var/www/html COMPOSER_ALLOW_SUPERUSER=1 DEBIAN_FRONTEND=noninteractive PHP_MAX_EXECUTION_TIME=300 PHP_ERROR_REPORTING=24575 SHOW_WELCOME_MESSAGE=false BASE_IMAGE_BUILD=301 BASE_IMAGE_DATE="27-04-2025 15:34:37 UTC" PHP_OPCACHE_ENABLE=1
+
+#
+# Some labels to help identify this container.
+#
 LABEL build_version="5.1" maintainer="james@firefly-iii.org"
 
+#
+# Make sure that there is a volume for attachment uploads.
+#
 VOLUME $FIREFLY_III_PATH/storage/upload
 
+#
+# Copy the necessary scripts and content.
+#
 COPY conf/locale.gen                     /etc/locale.gen
 COPY scripts/wait-for-it.sh              /usr/local/bin/wait-for-it.sh
 COPY scripts/finalize-image.sh           /usr/local/bin/finalize-image.sh
 COPY scripts/execute-things-web.sh           /etc/entrypoint.d/11-execute-things.sh
 
+#
+# Switch to the root user, run a few scripts and switch back to the www-data user.
+#
 USER root
 RUN set -eux; \
     chmod uga+x /usr/local/bin/wait-for-it.sh && \
     chmod uga+x /usr/local/bin/finalize-image.sh && \
     apt update && apt install -y curl locales && \
-    install-php-extensions intl
-RUN set -eux;install-php-extensions bcmath 
-RUN set -eux;install-php-extensions memcached 
-RUN set -eux;install-php-extensions sockets 
-RUN set -eux;rm -rf /var/lib/apt/lists/*
+    install-php-extensions intl bcmath memcached sockets && \
+    rm -rf /var/lib/apt/lists/*
 
 USER www-data
