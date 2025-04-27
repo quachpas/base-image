@@ -25,6 +25,8 @@ jobs:
           environment=${{ matrix.environment }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
           echo "ENV_PLATFORM_PAIR=${environment}-${platform//\//-}" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -32,7 +34,7 @@ jobs:
       - name: Compile Dockerfiles and update repository
         run: |
           echo "Update counters"
-          ls
+          ls -lah
           exit 1
           BUILDNR=$(<"counter.txt")
           BUILDNR=$((BUILDNR + 1))
