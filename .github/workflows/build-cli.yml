@@ -8,7 +8,7 @@ on:
         required: true
         default: 'latest'
   schedule:
-    - cron: "17 4 10,25 * *"
+    - cron: "17 5 8,23 * *"
 
 env:
   REGISTRY_IMAGE: fireflyiii/base
@@ -52,9 +52,6 @@ jobs:
         platform:
           - linux/amd64
           - linux/arm64
-        environment:
-          - web
-          - cli
     steps:
       - name: Prepare
         run: |
