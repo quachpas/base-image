@@ -49,7 +49,7 @@ The CLI version of the Docker container is only used by the data importer. It wi
 
 ## How to use?
 
-The base image can be found on [Docker Hub](https://hub.docker.com/r/fireflyiii/base), or used by pulling `fireflyiii/base:latest`. Keep in mind that the base image itself does nothing and will probably not even start: you will probably get an error about the script `entrypoint.sh` missing, because that script is included by [Firefly III](https://github.com/firefly-iii/firefly-iii/) or the [Data Importer](https://github.com/firefly-iii/data-importer/) when those images are built.
+The base image can be found on [Docker Hub](https://hub.docker.com/r/fireflyiii/base), or used by pulling `fireflyiii/base:latest`. Keep in mind that the base image itself does nothing and will probably not even start: you will probably get an error about the script `entrypoint.sh` missing, because that script is included by [Firefly III](https://github.com/firefly-iii/firefly-iii/) or the [Data Importer](https://github.com/firefly-iii/data-importer/) when those images are built. You can read more about those images on Azure DevOps: [Firefly III on Azure DevOps](https://dev.azure.com/Firefly-III/MainImage/_wiki/wikis/MainImage.wiki/3/Home) and the [Data Importer on Azure DevOps](https://dev.azure.com/Firefly-III/ImportToolImage/_wiki/wikis/ImportToolImage.wiki/4/Home).
 
 <!-- HELP TEXT -->
 
