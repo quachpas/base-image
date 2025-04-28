@@ -21,9 +21,9 @@
   </p>
 <!--- END PROJECT LOGO -->
 
-This is the repository that holds the "base" images for Firefly III and the Firefly III Data Importer. Both tools need this base image to run correctly. The Dockerfiles for this base image is stored and built on GitHub.
+This is the repository that holds the "base" images for [Firefly III](https://github.com/firefly-iii/firefly-iii/) and the [Firefly III Data Importer](https://github.com/firefly-iii/data-importer/). Both tools need this base image to run correctly. The Dockerfiles for this base image is stored and built on GitHub.
 
-There are two variants of the base image, and they both come in two labels.
+There are two variants of the base image, and they both come in two labels. You can find the images on [Docker Hub](https://hub.docker.com/r/fireflyiii/base) or by pulling `fireflyiii/base`.
 
 ## Base image (web version)
 
@@ -46,6 +46,10 @@ Adding the build number to the build this way helps me debug issues. When Firefl
 ## CLI versus web
 
 The CLI version of the Docker container is only used by the data importer. It will not start a web server (nor does it have the necessary code) and is used to import data over the command line.
+
+## How to use?
+
+The base image can be found on [Docker Hub](https://hub.docker.com/r/fireflyiii/base), or used by pulling `fireflyiii/base:latest`. Keep in mind that the base image itself does nothing and will probably not even start: you will probably get an error about the script `entrypoint.sh` missing, because that script is included by [Firefly III](https://github.com/firefly-iii/firefly-iii/) or the [Data Importer](https://github.com/firefly-iii/data-importer/) when those images are built.
 
 <!-- HELP TEXT -->
 
