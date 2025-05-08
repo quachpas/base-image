@@ -29,7 +29,7 @@ jobs:
           BUILDNR=$(<"counter.txt")
           BUILDNR=$((BUILDNR + 1))
           git pull origin main
-          git checkout main 
+          git checkout main
           git config user.email "robot@firefly-iii.org"
           git config user.name "Firefly III build robot"
           echo $(date '+%d-%m-%Y %T %Z') > date.txt
@@ -50,8 +50,7 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - linux/amd64
-          - linux/arm64
+          - linux/arm/v7
     steps:
       - name: Prepare
         run: |
